@@ -9,7 +9,7 @@ public class TicTacToe {
 
     public static void main(String[] args) {
 
-        // UC1: Display empty board
+        // UC1
         char[][] board = new char[3][3];
 
         for (int i = 0; i < 3; i++) {
@@ -26,12 +26,19 @@ public class TicTacToe {
             System.out.println();
         }
 
-        // UC2: Toss
+        // UC2
         tossToDecide();
 
-        // UC3: Take user input
+        // UC3
         int slot = getUserSlot();
-        System.out.println("Slot entered: " + slot);
+
+        // UC4
+        int row = getRowFromSlot(slot);
+        int col = getColFromSlot(slot);
+
+        System.out.println("\nConverted Position:");
+        System.out.println("Row = " + row);
+        System.out.println("Column = " + col);
     }
 
     // UC2
@@ -58,10 +65,16 @@ public class TicTacToe {
     // UC3
     static int getUserSlot() {
         Scanner sc = new Scanner(System.in);
-
         System.out.print("\nEnter slot (1-9): ");
-        int slot = sc.nextInt();
+        return sc.nextInt();
+    }
 
-        return slot;
+    // UC4
+    static int getRowFromSlot(int slot) {
+        return (slot - 1) / 3;
+    }
+
+    static int getColFromSlot(int slot) {
+        return (slot - 1) % 3;
     }
 }
