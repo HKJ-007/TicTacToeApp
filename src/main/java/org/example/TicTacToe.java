@@ -8,38 +8,60 @@ public class TicTacToe {
             {'-', '-', '-'}
     };
 
-    static char computerSymbol = 'O';
+    static boolean isHumanTurn = true;
+    static boolean gameOver = false;
 
     public static void main(String[] args) {
-        computerMove();
-        printBoard();
+
+        int moves = 0;
+
+        while (!gameOver) {
+
+            if (isHumanTurn) {
+                System.out.println("Human turn");
+                placeMove(0, 0, 'X'); // sample move
+            } else {
+                System.out.println("Computer turn");
+                computerMove();
+            }
+
+            printBoard();
+            moves++;
+
+            // stop condition (basic)
+            if (moves == 9) {
+                gameOver = true;
+                System.out.println("Game Draw!");
+            }
+
+            // switch turn
+            isHumanTurn = !isHumanTurn;
+        }
     }
 
-    // UC5 reused
     public static boolean isValidMove(int row, int col) {
         if (row < 0 || row > 2 || col < 0 || col > 2) return false;
         if (board[row][col] != '-') return false;
         return true;
     }
 
-    // UC6 reused
     public static void placeMove(int row, int col, char symbol) {
-        board[row][col] = symbol;
+        if (isValidMove(row, col)) {
+            board[row][col] = symbol;
+        }
     }
 
-    // UC7 Logic
     public static void computerMove() {
         Random rand = new Random();
         int row, col;
 
         while (true) {
-            int slot = rand.nextInt(9) + 1; // 1–9
-
+            int slot = rand.nextInt(9) + 1;
             row = (slot - 1) / 3;
             col = (slot - 1) % 3;
 
             if (isValidMove(row, col)) {
-                placeMove(row, col, computerSymbol);
+                placeMove(row, col, 'O');
                 break;
             }
         }
