@@ -1,27 +1,17 @@
+import java.util.Random;
+
 public class TicTacToe {
 
-    static char[][] board = new char[3][3];
-    static char currentPlayer = 'X';
+    static char[][] board = {
+            {'-', '-', '-'},
+            {'-', '-', '-'},
+            {'-', '-', '-'}
+    };
+
+    static char computerSymbol = 'O';
 
     public static void main(String[] args) {
-
-        // Initialize board
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                board[i][j] = '-';
-            }
-        }
-
-        int row = 1;
-        int col = 1;
-
-        if (isValidMove(row, col)) {
-            placeMove(row, col, currentPlayer);
-            System.out.println("Move placed!");
-        } else {
-            System.out.println("Invalid move!");
-        }
-
+        computerMove();
         printBoard();
     }
 
@@ -32,9 +22,27 @@ public class TicTacToe {
         return true;
     }
 
-    // UC6 Logic
+    // UC6 reused
     public static void placeMove(int row, int col, char symbol) {
         board[row][col] = symbol;
+    }
+
+    // UC7 Logic
+    public static void computerMove() {
+        Random rand = new Random();
+        int row, col;
+
+        while (true) {
+            int slot = rand.nextInt(9) + 1; // 1–9
+
+            row = (slot - 1) / 3;
+            col = (slot - 1) % 3;
+
+            if (isValidMove(row, col)) {
+                placeMove(row, col, computerSymbol);
+                break;
+            }
+        }
     }
 
     public static void printBoard() {
